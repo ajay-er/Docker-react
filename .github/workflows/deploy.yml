@@ -10,5 +10,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-      - run: docker build -t cygnetops/react-test -f Dockerfile.dev .
-      - run: docker run -e CI=true cygnetops/react-test npm test
+      - run: docker build -t ajay/react-test -f Dockerfile.dev .
+      - run: docker run -e CI=true ajay/react-test npm test
+
+      - name: Generate deployment package
+        run: zip -r deploy.zip . -x '*.git*'
+
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: mytestapp-docker
+          environment_name: Mytestapp-docker-env
+          version_label: ${{ github.sha }}
+          existing_bucket_name: elasticbeanstalk-ap-south-1-626059476661
+          region: ap-south-1
+          deployment_package: deploy.zip
