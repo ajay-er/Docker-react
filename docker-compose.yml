@@ -1,19 +1,35 @@
+# version: '3'
+# services: 
+#   web:
+#     build: 
+#       context: .
+#       dockerfile: Dockerfile.dev
+#     ports: 
+#       - "3000:3000"
+#     volumes:
+#       - /app/node_modules
+#       - .:/app
+#   tests:
+#     build: 
+#       context: .
+#       dockerfile: Dockerfile.dev
+#     volumes:
+#       - /app/node_modules
+#       - .:/app
+#     command: ["npm","run","test"]
 version: '3'
-services: 
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile 
+    ports:
+      - '3000:3000' 
   web:
-    build: 
-      context: .
-      dockerfile: Dockerfile.dev
-    ports: 
-      - "3000:3000"
+    image: nginx
+    ports:
+      - '80:80'
     volumes:
-      - /app/node_modules
-      - .:/app
-  tests:
-    build: 
-      context: .
-      dockerfile: Dockerfile.dev
-    volumes:
-      - /app/node_modules
-      - .:/app
-    command: ["npm","run","test"]
+      - ./nginx.conf:/etc/nginx/nginx.conf 
+    depends_on:
+      - app 
