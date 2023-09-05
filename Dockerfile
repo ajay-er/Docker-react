@@ -8,12 +8,12 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
+RUN npm run strart
 
 
-FROM nginx
-
-COPY --from=builder /app/build /usr/share/nginx/html
+# FROM nginx
+# EXPOSE 80
+# COPY --from=builder /app/build /usr/share/nginx/html
 
 
 

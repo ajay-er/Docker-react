@@ -21,8 +21,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: mytestapp-docker
-          environment_name: Mytestapp-docker-env
+          application_name: test-dumy
+          environment_name: Test-dumy-env
           existing_bucket_name: elasticbeanstalk-ap-south-1-626059476661
           version_label: ${{ github.sha }}
           region: ap-south-1
