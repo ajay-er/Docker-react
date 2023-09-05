@@ -8,7 +8,7 @@ RUN npm install
 
 COPY . .
 
-RUN npm run strart
+RUN npm run start
 
 
 # FROM nginx
